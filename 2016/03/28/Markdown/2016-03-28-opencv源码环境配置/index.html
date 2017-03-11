@@ -1,0 +1,748 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="opencv,配置,vs2008,vs2013,源码," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="OpenCV作为一个十分优秀的跨平台计算机视觉库，我们不仅可以使用其提供的工具，有时更希望能了解其实现机制，然后修改它，进化它。因此构建一个能够方便Goto Source的平台十分必要的。本文提供了在32位Win7下，基于VS2013的平台搭建的方式，仅供参考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV源码环境配置（2.X版及3.X版 + VS2008/VS2013 + win7 x86）">
+<meta property="og:url" content="http://yoursite.com/2016/03/28/Markdown/2016-03-28-opencv源码环境配置/index.html">
+<meta property="og:site_name" content="Vector<int>'s Notes">
+<meta property="og:description" content="OpenCV作为一个十分优秀的跨平台计算机视觉库，我们不仅可以使用其提供的工具，有时更希望能了解其实现机制，然后修改它，进化它。因此构建一个能够方便Goto Source的平台十分必要的。本文提供了在32位Win7下，基于VS2013的平台搭建的方式，仅供参考。">
+<meta property="og:image" content="http://i.imgur.com/Uc4TXAs.png">
+<meta property="og:image" content="http://i.imgur.com/96HWZlk.png">
+<meta property="og:image" content="http://i.imgur.com/tMnKW2g.png">
+<meta property="og:image" content="http://i.imgur.com/04Dt0Xo.png">
+<meta property="og:image" content="http://i.imgur.com/oqeipST.png">
+<meta property="og:image" content="http://i.imgur.com/jQderJ1.png">
+<meta property="og:image" content="http://i.imgur.com/2RlOgiq.jpg">
+<meta property="og:image" content="http://i.imgur.com/ZYGcqcA.jpg">
+<meta property="og:image" content="http://i.imgur.com/lEvfT5r.jpg">
+<meta property="og:image" content="http://i.imgur.com/iaHRIQN.jpg">
+<meta property="og:image" content="http://i.imgur.com/xwBIBY3.png">
+<meta property="og:image" content="http://i.imgur.com/NyiA1na.png">
+<meta property="og:image" content="http://i.imgur.com/fPGAcjS.png">
+<meta property="og:image" content="http://i.imgur.com/kLnJ4qO.png">
+<meta property="og:image" content="http://i.imgur.com/phRrc6R.png">
+<meta property="og:updated_time" content="2017-03-07T08:23:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV源码环境配置（2.X版及3.X版 + VS2008/VS2013 + win7 x86）">
+<meta name="twitter:description" content="OpenCV作为一个十分优秀的跨平台计算机视觉库，我们不仅可以使用其提供的工具，有时更希望能了解其实现机制，然后修改它，进化它。因此构建一个能够方便Goto Source的平台十分必要的。本文提供了在32位Win7下，基于VS2013的平台搭建的方式，仅供参考。">
+<meta name="twitter:image" content="http://i.imgur.com/Uc4TXAs.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/03/28/Markdown/2016-03-28-opencv源码环境配置/"/>
+
+
+
+
+
+  <title> OpenCV源码环境配置（2.X版及3.X版 + VS2008/VS2013 + win7 x86） | Vector<int>'s Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vector<int>'s Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/03/28/Markdown/2016-03-28-opencv源码环境配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jacob Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vector<int>'s Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                OpenCV源码环境配置（2.X版及3.X版 + VS2008/VS2013 + win7 x86）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-28T11:40:19+08:00">
+                2016-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenCV/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenCV</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>OpenCV作为一个十分优秀的跨平台计算机视觉库，我们不仅可以使用其提供的工具，有时更希望能了解其实现机制，然后修改它，进化它。因此构建一个能够方便Goto Source的平台十分必要的。本文提供了在32位Win7下，基于VS2013的平台搭建的方式，仅供参考。</p>
+<a id="more"></a>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>Cmake：<a href="https://cmake.org/" target="_blank" rel="external">官网</a></p>
+<p>OpenCV：<a href="http://opencv.org/" target="_blank" rel="external">官网</a></p>
+<p>VS2008：<a href="ed2k://|file|en_visual_studio_2008_professional_x86_dvd_X14-26326.iso|3554287616|46C8C3EF0FB4E67A50971E41B4B1FF0A|/" target="_blank" rel="external">下载地址</a></p>
+<p>VS2013：<a href="ed2k://|file|mu_visual_studio_2013_update_5_x86_dvd_6815499.iso|6407950336|1F292D0E43A6274B210689F694BDF58B|/" target="_blank" rel="external">下载地址</a></p>
+<h2 id="配置过程（以Opencv3-1为例）"><a href="#配置过程（以Opencv3-1为例）" class="headerlink" title="配置过程（以Opencv3.1为例）"></a>配置过程（以Opencv3.1为例）</h2><h3 id="1-使用Cmake编译源码"><a href="#1-使用Cmake编译源码" class="headerlink" title="1. 使用Cmake编译源码"></a>1. 使用Cmake编译源码</h3><p>先将从opencv官网下载的3.1的包解压到磁盘C:\Opencv\3.1下，里面包含build和source文件夹及两个txt文件；</p>
+<p><img src="http://i.imgur.com/Uc4TXAs.png" alt="1"></p>
+<p>打开Cmake，配置如下</p>
+<p><img src="http://i.imgur.com/96HWZlk.png" alt="2"></p>
+<p><img src="http://i.imgur.com/tMnKW2g.png" alt="3"></p>
+<p>文件路径配置完成后，点击Configure按钮，此时会读取Cmake文件中的配置信息，如下图：</p>
+<p><img src="http://i.imgur.com/04Dt0Xo.png" alt="4"></p>
+<p><img src="http://i.imgur.com/oqeipST.png" alt="5"></p>
+<p><img src="http://i.imgur.com/jQderJ1.png" alt="6"></p>
+<p><img src="http://i.imgur.com/2RlOgiq.jpg" alt="7"></p>
+<h3 id="2-利用VS重新编译工程，生成库文件"><a href="#2-利用VS重新编译工程，生成库文件" class="headerlink" title="2. 利用VS重新编译工程，生成库文件"></a>2. 利用VS重新编译工程，生成库文件</h3><p>在之前配置的工程路径下，找到OpenCV.sln，双击打开工程</p>
+<p><img src="http://i.imgur.com/ZYGcqcA.jpg" alt="8"></p>
+<p><img src="http://i.imgur.com/lEvfT5r.jpg" alt="9"></p>
+<p>这里我将这些lib文件拷贝到工程目录下新建的lib310文件夹下，方便配置路径时，少点几步。</p>
+<h3 id="3-新建工程，配置环境"><a href="#3-新建工程，配置环境" class="headerlink" title="3. 新建工程，配置环境"></a>3. 新建工程，配置环境</h3><p>如果顺利的到这步，已经离成功不远了，新建一个win32的console工程；</p>
+<p><img src="http://i.imgur.com/iaHRIQN.jpg" alt="10"></p>
+<p><img src="http://i.imgur.com/xwBIBY3.png" alt="11"></p>
+<p><img src="http://i.imgur.com/NyiA1na.png" alt="12"></p>
+<p><img src="http://i.imgur.com/fPGAcjS.png" alt="13"></p>
+<p>OpenCV3.1 Debug 库文件名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">opencv_ts310d.lib  </div><div class="line">IlmImfd.lib  </div><div class="line">libjasperd.lib  </div><div class="line">libjpegd.lib  </div><div class="line">libpngd.lib  </div><div class="line">libtiffd.lib  </div><div class="line">libwebpd.lib  </div><div class="line">opencv_calib3d310d.lib  </div><div class="line">opencv_core310d.lib  </div><div class="line">opencv_features2d310d.lib  </div><div class="line">opencv_flann310d.lib  </div><div class="line">opencv_highgui310d.lib  </div><div class="line">opencv_imgcodecs310d.lib  </div><div class="line">opencv_imgproc310d.lib  </div><div class="line">opencv_ml310d.lib  </div><div class="line">opencv_objdetect310d.lib  </div><div class="line">opencv_photo310d.lib  </div><div class="line">opencv_shape310d.lib  </div><div class="line">opencv_stitching310d.lib  </div><div class="line">opencv_superres310d.lib  </div><div class="line">opencv_video310d.lib  </div><div class="line">opencv_videoio310d.lib  </div><div class="line">opencv_videostab310d.lib  </div><div class="line">zlibd.lib  </div><div class="line">ippicvmt.lib</div></pre></td></tr></table></figure></p>
+<p>OpenCV3.1 Release库文件名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">opencv_ts310.lib  </div><div class="line">IlmImf.lib  </div><div class="line">ippicvmt.lib  </div><div class="line">libjasper.lib  </div><div class="line">libjpeg.lib  </div><div class="line">libpng.lib  </div><div class="line">libtiff.lib  </div><div class="line">libwebp.lib  </div><div class="line">opencv_calib3d310.lib  </div><div class="line">opencv_core310.lib  </div><div class="line">opencv_features2d310.lib  </div><div class="line">opencv_flann310.lib  </div><div class="line">opencv_highgui310.lib  </div><div class="line">opencv_imgcodecs310.lib  </div><div class="line">opencv_imgproc310.lib  </div><div class="line">opencv_ml310.lib  </div><div class="line">opencv_objdetect310.lib  </div><div class="line">opencv_photo310.lib  </div><div class="line">opencv_shape310.lib  </div><div class="line">opencv_stitching310.lib  </div><div class="line">opencv_superres310.lib  </div><div class="line">opencv_video310.lib  </div><div class="line">opencv_videoio310.lib  </div><div class="line">opencv_videostab310.lib  </div><div class="line">zlib.lib</div></pre></td></tr></table></figure></p>
+<p><em><em>这里ippicvmt.lib这个在两边都要配，而且Debug下没有加d，如果不配置编译时回报LNK2019的错误，如果是OpenCV2.x版本好像两边都没有看到这个lib</em></em></p>
+<p>保存配置文件，这样以后只要直接引用你保存的配置文件即可，不需要重新配置了；到此，配置工作就完成了；可以开始写代码测试了；</p>
+<h3 id="4-测试"><a href="#4-测试" class="headerlink" title="4. 测试"></a>4. 测试</h3><p>下个断点，单步执行就能跟进源码了</p>
+<p><img src="http://i.imgur.com/kLnJ4qO.png" alt="14"></p>
+<p><img src="http://i.imgur.com/phRrc6R.png" alt="15"></p>
+<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h3><p>在成功之前尝试了无数次都没有成功，归结起来就是配置新建工程时库的路径选择不对，还有就是第三方的库一定要选择，如果没有重新编译INSTALL那个工程的话，第三方库存放在..\3rdparty\lib下；还有，库文件不要在添加opencv已经编译好的了，那样同样是跟不进源码的。</p>
+<p><em><em>PS: VS2008+OpenCV2.x的配置方法跟这一样，就是lib的文件名不同，这里给出2.4.8的，大家只要把248改为对应的版本号即可; 这里给出2.4.8版本的库文件名。</em></em></p>
+<p><em><em>Debug库文件名：</em></em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">IlmImfd.lib  </div><div class="line">libjasperd.lib  </div><div class="line">libjpegd.lib  </div><div class="line">libpngd.lib  </div><div class="line">libtiffd.lib  </div><div class="line">zlibd.lib  </div><div class="line">opencv_ml248d.lib  </div><div class="line">opencv_calib3d248d.lib  </div><div class="line">opencv_contrib248d.lib  </div><div class="line">opencv_core248d.lib  </div><div class="line">opencv_features2d248d.lib  </div><div class="line">opencv_flann248d.lib  </div><div class="line">opencv_gpu248d.lib  </div><div class="line">opencv_highgui248d.lib  </div><div class="line">opencv_imgproc248d.lib  </div><div class="line">opencv_legacy248d.lib  </div><div class="line">opencv_objdetect248d.lib  </div><div class="line">opencv_ts248d.lib  </div><div class="line">opencv_video248d.lib  </div><div class="line">opencv_nonfree248d.lib  </div><div class="line">opencv_ocl248d.lib  </div><div class="line">opencv_photo248d.lib  </div><div class="line">opencv_stitching248d.lib  </div><div class="line">opencv_superres248d.lib  </div><div class="line">opencv_videostab248d.lib</div></pre></td></tr></table></figure></p>
+<p><em><em>Release库文件名：</em></em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">IlmImf.lib</div><div class="line">libjasper.lib</div><div class="line">libjpeg.lib</div><div class="line">libpng.lib</div><div class="line">libtiff.lib</div><div class="line">zlib.lib</div><div class="line">opencv_calib3d248.lib</div><div class="line">opencv_contrib248.lib</div><div class="line">opencv_core248.lib</div><div class="line">opencv_features2d248.lib</div><div class="line">opencv_flann248.lib</div><div class="line">opencv_gpu248.lib</div><div class="line">opencv_haartraining_engine.lib</div><div class="line">opencv_highgui248.lib</div><div class="line">opencv_imgproc248.lib</div><div class="line">opencv_legacy248.lib</div><div class="line">opencv_ml248.lib</div><div class="line">opencv_nonfree248.lib</div><div class="line">opencv_objdetect248.lib</div><div class="line">opencv_ocl248.lib</div><div class="line">opencv_photo248.lib</div><div class="line">opencv_stitching248.lib</div><div class="line">opencv_superres248.lib</div><div class="line">opencv_ts248.lib</div><div class="line">opencv_video248.lib</div><div class="line">opencv_videostab248.lib</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/opencv/" rel="tag"># opencv</a>
+          
+            <a href="/tags/配置/" rel="tag"># 配置</a>
+          
+            <a href="/tags/vs2008/" rel="tag"># vs2008</a>
+          
+            <a href="/tags/vs2013/" rel="tag"># vs2013</a>
+          
+            <a href="/tags/源码/" rel="tag"># 源码</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/06/Markdown/2016-07-06-tesseract-2-how-to-build-tesseract-3-dot-04-with-vs2013/" rel="prev" title="tesseract(2)_How to Build Tesseract 3.04 with VS2013">
+                tesseract(2)_How to Build Tesseract 3.04 with VS2013 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Jacob Lin" />
+          <p class="site-author-name" itemprop="name">Jacob Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">记录</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-number">1.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置过程（以Opencv3-1为例）"><span class="nav-number">2.</span> <span class="nav-text">配置过程（以Opencv3.1为例）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-使用Cmake编译源码"><span class="nav-number">2.1.</span> <span class="nav-text">1. 使用Cmake编译源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-利用VS重新编译工程，生成库文件"><span class="nav-number">2.2.</span> <span class="nav-text">2. 利用VS重新编译工程，生成库文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-新建工程，配置环境"><span class="nav-number">2.3.</span> <span class="nav-text">3. 新建工程，配置环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-测试"><span class="nav-number">2.4.</span> <span class="nav-text">4. 测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-总结"><span class="nav-number">2.5.</span> <span class="nav-text">5. 总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jacob Lin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
