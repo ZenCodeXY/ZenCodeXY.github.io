@@ -1,0 +1,695 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Build,Leptonica,3rdparty,VS,OpenCV," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="OpenCV对于做图像处理这一行的人肯定非常熟悉，相较于它，另外一个开源库Leptonica就相对小众很多。Leptonica主要是面向教学用途的开源库。最有名的OCR开源库Tesseract就是利用Leptonica作为基础库使用的，尽管如此，Leptonica中使用的一些算法仍值学习，本文就简单介绍下VS编译方法及过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用OpenCV第三方库编译Leptonica">
+<meta property="og:url" content="http://yoursite.com/2017/06/17/Markdown/2017-06-17-leptonica-build-using-opencvs-3rdparty/index.html">
+<meta property="og:site_name" content="Matrix's Notes">
+<meta property="og:description" content="OpenCV对于做图像处理这一行的人肯定非常熟悉，相较于它，另外一个开源库Leptonica就相对小众很多。Leptonica主要是面向教学用途的开源库。最有名的OCR开源库Tesseract就是利用Leptonica作为基础库使用的，尽管如此，Leptonica中使用的一些算法仍值学习，本文就简单介绍下VS编译方法及过程。">
+<meta property="og:image" content="E:\\LZX\\MyBlog\\Posted\\Leptonica_Build1.jpg">
+<meta property="og:updated_time" content="2017-06-17T07:26:18.644Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用OpenCV第三方库编译Leptonica">
+<meta name="twitter:description" content="OpenCV对于做图像处理这一行的人肯定非常熟悉，相较于它，另外一个开源库Leptonica就相对小众很多。Leptonica主要是面向教学用途的开源库。最有名的OCR开源库Tesseract就是利用Leptonica作为基础库使用的，尽管如此，Leptonica中使用的一些算法仍值学习，本文就简单介绍下VS编译方法及过程。">
+<meta name="twitter:image" content="E:\\LZX\\MyBlog\\Posted\\Leptonica_Build1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/17/Markdown/2017-06-17-leptonica-build-using-opencvs-3rdparty/"/>
+
+
+
+
+
+  <title> 利用OpenCV第三方库编译Leptonica | Matrix's Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Matrix's Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/17/Markdown/2017-06-17-leptonica-build-using-opencvs-3rdparty/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jacob Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Matrix's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                利用OpenCV第三方库编译Leptonica
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-17T13:39:59+08:00">
+                2017-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenSource/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenSource</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>　　OpenCV对于做图像处理这一行的人肯定非常熟悉，相较于它，另外一个开源库Leptonica就相对小众很多。Leptonica主要是面向教学用途的开源库。最有名的OCR开源库Tesseract就是利用Leptonica作为基础库使用的，尽管如此，Leptonica中使用的一些算法仍值学习，本文就简单介绍下VS编译方法及过程。<br><a id="more"></a></p>
+<p>##工具</p>
+<ol>
+<li>Leptonica (<a href="http://www.leptonica.com/" target="_blank" rel="external">http://www.leptonica.com/</a>)</li>
+<li>OpenCV(<a href="http://opencv.org/" target="_blank" rel="external">http://opencv.org/</a>)</li>
+<li>CMake(<a href="https://cmake.org/" target="_blank" rel="external">https://cmake.org/</a>)</li>
+<li>Visual Studio<strong>（本文以2015版为例）</strong></li>
+<li>由于Leptonica对于图像读写操作也是依赖第三方库，而且和OpenCV一样，所以采用OpenCV内提供的3rdparty\src来编译。如果不想使用OpenCV内的，其自行下载如下五个库编译：<br>zlib(<a href="http://www.zlib.net/" target="_blank" rel="external">http://www.zlib.net/</a>)<br>libpng(<a href="http://www.libpng.org/pub/png/libpng.html" target="_blank" rel="external">http://www.libpng.org/pub/png/libpng.html</a>)<br>libjpeg(<a href="http://www.ijg.org/" target="_blank" rel="external">http://www.ijg.org/</a>)<br>libtiff(<a href="http://download.osgeo.org/libtiff/" target="_blank" rel="external">http://download.osgeo.org/libtiff/</a>)<br>libgif(<a href="https://sourceforge.net/projects/giflib/" target="_blank" rel="external">https://sourceforge.net/projects/giflib/</a>)</li>
+</ol>
+<p>##步骤</p>
+<p>###编译OpenCV###<br>　　这里不详细说明，请参考博客(<a href="http://matrixs.site/2016/03/28/Markdown/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/)。" target="_blank" rel="external">http://matrixs.site/2016/03/28/Markdown/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/)。</a><br>　　<strong>强调一点，OpenCV需要重新编译，因为要使用到重新编译后生成的lib文件及两个头文件。</strong></p>
+<p>###编译Leptonica###</p>
+<p>####CMake生成工程####<br>　　解压Leptonica源码包，利用CMake将Leptonica源码包生成所需版本。<br>　　<center><img src="E:\\LZX\\MyBlog\\Posted\\Leptonica_Build1.jpg" alt=""></center></p>
+<p>####配置工程####<br>　　打开CMake后的工程，按如下步骤配置leptonica工程。<br>　　<strong>Additional Include Directions:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">..\opencv\sources\3rdparty\zlib;</div><div class="line">..\opencv\sources\3rdparty\libtiff;</div><div class="line">..\opencv\sources\3rdparty\libpng;</div><div class="line">..\opencv\sources\3rdparty\libjpeg;</div><div class="line">..\leptonica\source\src;</div><div class="line">..\$cmake时指定的leptonica工程目录$\src;</div><div class="line">..\include\3rdparty;(这个目录为自建目录，将OpenCV编译后，工程文件夹内3rdparty\zlib和3rdparty\libtiff目录下zconf.h和tif_config.h两个文件拷贝至此)</div></pre></td></tr></table></figure></p>
+<p>　　<strong>Additional Library Directions:</strong>　　<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">..\install\x64\vc14\staticlib;(OpenCV重新编译后，生成的lib文件所在目录)</div></pre></td></tr></table></figure></p>
+<p>　　<strong>Additional Dependencies:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Release      or  Debug</div><div class="line">libjpeg.lib  or  libjpegd.lib</div><div class="line">libpng.lib   or  libpngd.lib</div><div class="line">libtiff.lib  or  libtiffd.lib</div><div class="line">zlib.lib     or  zlibd.lib</div></pre></td></tr></table></figure></p>
+<p>　　<strong>Preprocessor Definitions</strong>中添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LIBLEPT_EXPORTS</div></pre></td></tr></table></figure></p>
+<p>　　找到<strong>config_auto.h</strong>，修改里面宏定义，添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#define HAVE_LIBPNG 1</div><div class="line">#define HAVE_LIBJPEG 1</div><div class="line">#define HAVE_LIBTIFF 1</div><div class="line">#define HAVEL_LIBZ 1</div></pre></td></tr></table></figure></p>
+<p>　　此时编译工程会出现’INT32’ redefinition的错误。到<strong>jmorecfg.h</strong>中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#ifndef XMD_H			/* X11/xmd.h correctly defines INT32 */</div><div class="line">typedef long INT32;</div><div class="line">#endif</div></pre></td></tr></table></figure></p>
+<p>　　改为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#include &lt;Windows.h&gt;    /* Added by wujiyang 2017.6.13  14:18  complier dlib for leptonica */      </div><div class="line">#ifndef XMD_H           /* X11/xmd.h correctly defines INT32 */      </div><div class="line">#ifndef _BASETSD_H_     /* Microsoft defines it in basetsd.h */      </div><div class="line">#ifndef _BASETSD_H      /* MinGW is slightly different */      </div><div class="line">#ifndef QGLOBAL_H       /* Qt defines it in qglobal.h */      </div><div class="line">typedef long INT32;      </div><div class="line">#endif      </div><div class="line">#endif      </div><div class="line">#endif      </div><div class="line">#endif</div></pre></td></tr></table></figure></p>
+<p>　　至此就完成leptonica工程配置，可以重编工程了。</p>
+<p>####使用重编后的库####<br>　　只需将刚编译好的<strong>leptonica-版本号d.dll</strong>或<strong>leptonica-版本号.dll</strong>(工程目录bin文件夹中)拷贝至所需工程下即可。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Build/" rel="tag"># Build</a>
+          
+            <a href="/tags/Leptonica/" rel="tag"># Leptonica</a>
+          
+            <a href="/tags/3rdparty/" rel="tag"># 3rdparty</a>
+          
+            <a href="/tags/VS/" rel="tag"># VS</a>
+          
+            <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/06/Markdown/2016-07-06-tesseract-2-how-to-build-tesseract-3-dot-04-with-vs2013/" rel="next" title="tesseract(2)_How to Build Tesseract 3.04 with VS2013">
+                <i class="fa fa-chevron-left"></i> tesseract(2)_How to Build Tesseract 3.04 with VS2013
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Jacob Lin" />
+          <p class="site-author-name" itemprop="name">Jacob Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">记录</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jacob Lin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
